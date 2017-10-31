@@ -8,33 +8,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </head>
-<<<<<<< HEAD
-  <body>
-    <div class = "container">
-      <h1>Yummy Recipe App</h1> 
-      
-        <button type="button" class="btn btn-default">Recipes</button> <button type="button" class="btn btn-default">Login</button>  <button type="button" class="btn btn-default">Signup</button>                       
-
-      
-          <p> Do you love cooking and eating amazing food and cannot keep track of your favorite chef's recipe</p> 
-          <p> We have got you </p>
-          <p> View our amazing recipes</p>
-    
-
-        <p> Have an account with us:</p> 
-      <form>
-      <div class="form-group">
-        <label for="pwd">Email:</label>
-        <input type="password" class="form-control" id="email">
-      </div>
-      <div class="form-group">
-        <label for="pwd">Password:</label>
-        <input type="password" class="form-control" id="pwd">
-      </div>
-    
-      <button type="submit" class="btn btn-default">Login</button>
-      </form>
-=======
 
   
   <body>
@@ -45,41 +18,14 @@
               <a class="navbar-brand" href="#">Yummy Recipe App</a>
             </div>
             <ul class="nav navbar-nav">
-              <li><a href="home.html">Home</a></li>
-              <li><a href="dashboard.html">Recipes</a></li>
+              <li><a href="{{ url_for('main')}}">Home</a></li>
+              <li><a href="{{ url_for('dashboard')}} ">Recipes</a></li>
             </ul>
           </div>
       </nav>
->>>>>>> develop
 
       <div class="container">
 
-<<<<<<< HEAD
-      <p> Donot have an account with us:</p> 
-      <form>
-      <div class="form-group">
-        <label for="email">First Name:</label>
-        <input type="email" class="form-control" id="fname">
-      </div>
-      <div class="form-group">
-        <label for="pwd">Last Name:</label>
-        <input type="password" class="form-control" id="lname">
-      </div>
-      <div class="form-group">
-        <label for="pwd">Email:</label>
-        <input type="password" class="form-control" id="email">
-      </div>
-      <div class="form-group">
-        <label for="pwd">Password:</label>
-        <input type="password" class="form-control" id="pwd">
-      </div>
-    
-      <button type="submit" class="btn btn-default">Signup</button>
-      </form>
-          
-          </div>
-        </form>
-=======
            <b> <p> Do you love cooking and eating amazing food and cannot keep track of your favorite chef's recipe</p> 
             <p> We have got you </p>
             <p> View our amazing recipes</p> </b>
@@ -126,7 +72,6 @@
           </form>
 
       </div>
->>>>>>> develop
     
     </div>
   </body>
