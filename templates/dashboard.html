@@ -8,19 +8,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </head>
-<<<<<<< HEAD
-  <body>
-    <div class= "container">
-      <h1>Yummy Recipe App</h1> 
-    
-      <button type="button" class="btn btn-default">Recipes</button> <button type="button" class="btn btn-default">Login</button>  <button type="button" class="btn btn-default">Signup</button>     <p> Hallo, First Name..</p>        
-
-      
-=======
 
   
   <body>
->>>>>>> develop
 
       <nav class="navbar navbar-inverse">
           <div class="container-fluid">
@@ -28,8 +18,8 @@
               <a class="navbar-brand" href="#">Yummy Recipe App</a>
             </div>
             <ul class="nav navbar-nav">
-              <li><a href="home.html">Home</a></li>
-              <li><a href="dashboard.html">Recipes</a></li>
+              <li><a href="{{ url_for('main')}}">Home</a></li>
+              <li><a href="{{ url_for('dashboard')}} ">Recipes</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="#"><span class="glyphicon glyphicon-user"></span> Hallo, Jane Doe</a></li>
@@ -43,7 +33,7 @@
 
 
 
-      <button type="submit" class="btn btn-default"><a href = "categories.html">Add Recipe Category</a></button>  <button type="submit" class="btn btn-default"><a href = "addrecipe.html">Add Recipe</a></button> 
+      <button type="submit" class="btn btn-default"><a href = "{{ url_for('categories')}} ">Add Recipe Category</a></button>  <button type="submit" class="btn btn-default"><a href = "{{url_for('addrecipe')}}">Add Recipe</a></button> 
       </div>     
  
   </body>
