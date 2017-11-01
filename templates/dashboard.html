@@ -30,9 +30,13 @@
         
        <h3>Your favorite Recipes</h3> 
 
-
-
-
+       <form method="GET">
+          Recipe Categories:{{ name }}<br>
+          
+          Description:{{ description }}<br>
+        
+        </form>
+      
       <button type="submit" class="btn btn-default"><a href = "{{ url_for('categories')}} ">Add Recipe Category</a></button>  <button type="submit" class="btn btn-default"><a href = "{{url_for('addrecipe')}}">Add Recipe</a></button> 
       </div>     
  
