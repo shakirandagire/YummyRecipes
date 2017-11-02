@@ -1,9 +1,10 @@
 class Recipes(object):
 
-    def __init__(self, name, category, description):
+    def __init__(self, name, category, description, recipes = None):
         self.name = name
         self.category = category
         self.description = description
+        self.recipes =  []
 
     def addrecipe(self, name, category,description):
         self.recipes.append(name)

@@ -1,11 +1,11 @@
 class User(object):
    
-    def __init__(self,firstname,lastname, email, password, recipes=None ,categories = None):
+    def __init__(self,firstname,lastname, email, password,categories = None):
         self.firstname = firstname
+        self.lastname = lastname
         self.email = email
         self.password = password
-        self.recipes = recipes or []
-        self.categories = categories or []
+        self.categories =  []
 
     def login(self, email, password):
         if email == self.email and password == self.password:
@@ -13,14 +13,12 @@ class User(object):
         else:
             return False
 
-    def add_recipes_to_category(self, recipes):
-        self.recipes.append(recipe)
+    def signup(self,firstname,lastname, email, password):
+        if firstname == self.firstname and lastname == self.lastname and email == self.email and password == self.password:
+            return True
 
-    def delete_recipes_from_category(self, recipes):
-        self.recipes.remove(recipe)
-
-    def view_recipes_in_category(self):
-        return self.recipes
+        else:
+            return False
 
     def add_category(self, categories):
         self.categories.append(category)

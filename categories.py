@@ -10,7 +10,7 @@ class Categories(object):
         
     def delete_recipe(self, recipe):
         if len(self.recipes) > 0 and recipe in self.recipes:
-            self.recipes.remove(recipes)
+            self.recipes.remove(recipe)
         else:
             raise ValueError
 

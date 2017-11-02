@@ -1,9 +1,10 @@
 from flask import Flask
-from flask import render_template, request
-from flask import *
+from flask import render_template, request, url_for
+
 
 from categories import Categories
 from recipes import Recipes
+from user import User
 app = Flask(__name__)
 
 @app.route('/')
@@ -15,21 +16,24 @@ def dashboard():
     
     return render_template('dashboard.html' )
 
-@app.route("/home/signup", methods =["POST"])
+@app.route("/signup", methods =["POST",  "GET"])
 
 def signup():
     firstname = request.form['firstname']
     lastname = request.form['lastname']
     email = request.form['email']
     password = request.form['password']
-
+    new_user = User(firstname,lastname,email,password)
+    new_user.signup()
     return render_template('dashboard.html', firstname = firstname)
 
-@app.route("/home/login", methods =["POST"])
+@app.route("/login", methods =["POST" , "GET"])
 
 def login():
     firstname = request.form['firstname']
     password = request.form['password']
+    new_user = User(email,password)
+    new_user.login()
 
     return render_template('dashboard.html', firstname = firstname)
 
@@ -37,6 +41,8 @@ def login():
 @app.route('/addcategories')
 
 def addcategories():
+    new_category = Categories(categoryname)
+   
 
     return render_template('categories.html')
 
@@ -48,6 +54,14 @@ def viewcategories():
     categories.append(categoryname)
 
     return render_template('dashboard.html', categoryname =categoryname )
+
+def deletecategories():
+    categoryname = request.form['categoryname']
+    categories = []
+    categories.append(categoryname)
+
+    return render_template('dashboard.html', categoryname =categoryname )
+
 
 
 @app.route('/addrecipe') 

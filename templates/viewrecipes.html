@@ -28,12 +28,13 @@
 
             <p>Your favorite Recipes from top chefs</p> 
                         
-
                 Recipe name: {{recipename}} 
               </br>
-                Description: {{decsription}}
+                Description: {{description}}
+            </br>
+                
             
-                <button class="btn btn-default"><a href = "{{ url_for('addcategories')}} ">Add Recipe Category</a></button> 
+                <button class="btn btn-default"><a href = "{{ url_for('addcategories')}} ">Delete Recipe</a></button> 
                 
                 <button class="btn btn-default"><a href = "{{url_for('addrecipe')}}">Add Recipe</a></button> 
           

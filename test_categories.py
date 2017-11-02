@@ -1,6 +1,6 @@
 import unittest
 
-
+from categories import Categories
 class TestCategories(unittest.TestCase):
     def setUp(self):
         self.categories = Categories()
