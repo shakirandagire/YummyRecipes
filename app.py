@@ -1,11 +1,10 @@
 from flask import Flask
-from flask import render_template
+from flask import render_template, request
 from flask import *
-app = Flask(__name__)
 
-User = {}
-Recipes = {}
-Categories = {}
+from categories import Categories
+from recipes import Recipes
+app = Flask(__name__)
 
 @app.route('/')
 def main():
@@ -13,36 +12,63 @@ def main():
 
 @app.route('/dashboard')
 def dashboard():
-    return render_template('dashboard.html')
+    
+    return render_template('dashboard.html' )
 
-@app.route('/categories')
-def categories():
+@app.route("/home/signup", methods =["POST"])
 
-    if request.method=='POST':
-        name = request.form['name']
-        description=request.form['description']
-        
-        if name in Category :
-            Categories['name']= name
-            Categories['description']=description
-            
-        return redirect(url_for('categories'))
+def signup():
+    firstname = request.form['firstname']
+    lastname = request.form['lastname']
+    email = request.form['email']
+    password = request.form['password']
+
+    return render_template('dashboard.html', firstname = firstname)
+
+@app.route("/home/login", methods =["POST"])
+
+def login():
+    firstname = request.form['firstname']
+    password = request.form['password']
+
+    return render_template('dashboard.html', firstname = firstname)
+
+
+@app.route('/addcategories')
+
+def addcategories():
+
     return render_template('categories.html')
+
+@app.route('/viewcategories', methods=["POST"])
+
+def viewcategories():
+    categoryname = request.form['categoryname']
+    categories = []
+    categories.append(categoryname)
+
+    return render_template('dashboard.html', categoryname =categoryname )
+
 
 @app.route('/addrecipe') 
 def addrecipe():
-    if request.method=='POST':
-        name=request.form['name']
-        category=request.form['category']
-        description=request.form['description']
-        
-        if name in Recipe :
-            Recipes['name']=name
-            Recipes['category']=category
-            Recipes['description']=description
-            
-        return redirect(url_for('addrecipe'))
+
     return render_template('addrecipe.html')
+
+@app.route('/viewrecipes', methods = ['POST'])
+
+def viewrecipes():
+
+    recipename = request.form['recipename']
+    description = request.form['description']
+    recipes = []
+    recipes.append(recipename)
+    recipes.append(description)
+
+   
+
+    return render_template('viewrecipes.html', recipename =recipename, description = description)
+ 
 
     
 if __name__=="__main__":

@@ -22,22 +22,24 @@
               <li><a href="{{ url_for('dashboard')}} ">Recipes</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#"><span class="glyphicon glyphicon-user"></span> Hallo, Jane Doe</a></li>
+              <li><a href="#"><span class="glyphicon glyphicon-user"></span> Hallo, {{firstname}}</a></li>
                 
             </ul>
         </nav>
+
       <div class = "container">
         
        <h3>Your favorite Recipes</h3> 
-
-       <form method="GET">
-          Recipe Categories:{{ name }}<br>
           
-          Description:{{ description }}<br>
+             
+          <table><tr><td>Categories:<a href= "{{ url_for('viewrecipes')}}">{{categoryname}} </a></td></tr></table> <br>
+          
         
-        </form>
+      <button class="btn btn-default"><a href = "{{ url_for('addcategories')}} ">Add Recipe Category</a></button> 
       
-      <button type="submit" class="btn btn-default"><a href = "{{ url_for('categories')}} ">Add Recipe Category</a></button>  <button type="submit" class="btn btn-default"><a href = "{{url_for('addrecipe')}}">Add Recipe</a></button> 
+      <button class="btn btn-default"><a href = "{{url_for('addrecipe')}}">Add Recipe</a></button> 
+
+      
       </div>     
  
   </body>

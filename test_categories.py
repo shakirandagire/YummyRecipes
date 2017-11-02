@@ -7,8 +7,6 @@ class TestCategories(unittest.TestCase):
 
     def test_to_add_category(self):
         self.categories.append('chicken')
-        self.categories.append('beef')
-        self.categories.append('rice')
         self.assertEqual(self.categories.add_category, ['chicken', 'beef','rice'], msg='Add recipe to category')
 
     def test_delete_recipe_from_category(self):   

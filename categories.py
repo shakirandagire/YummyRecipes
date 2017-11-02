@@ -1,19 +1,18 @@
 class Categories(object):
 
-    def __init__(self, name, description, categories=None):
-        self.name = name
-        self.description = description
-        self.categories = []
+    def __init__(self, categoryname, recipes=None):
+        self.categoryname = categoryname
+        self.recipes = []
 
-    def add_category(self, category):
-        self.categories.append(name)  
-        self.categories.append(description)  
-             
-    def delete_category(self, category):
-        if len(self.categories) > 0 and category in self.categories:
-            self.categories.remove(category)
+    def add_recipe(self, recipe):
+        
+        self.recipes.append(recipe)  
+        
+    def delete_recipe(self, recipe):
+        if len(self.recipes) > 0 and recipe in self.recipes:
+            self.recipes.remove(recipes)
         else:
             raise ValueError
 
-    def view_categories(self):
-        return self.categories
+    def view_recipes(self):
+        return self.recipes
