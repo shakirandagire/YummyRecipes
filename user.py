@@ -1,14 +1,14 @@
 class User(object):
    
-    def __init__(self,firstname,lastname, email, password,categories = None):
+    def __init__(self,firstname=None,lastname=None, email=None, password= None,categories = None):
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
         self.password = password
         self.categories =  []
 
-    def login(self, email, password):
-        if email == self.email and password == self.password:
+    def login(self, firstname, password):
+        if firstname == self.firstname and password == self.password:
             return True
         else:
             return False

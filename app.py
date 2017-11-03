@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import render_template, request, url_for
+from flask import render_template, request, url_for,redirect
 
 
 from categories import Categories
@@ -19,48 +19,60 @@ def dashboard():
 @app.route("/signup", methods =["POST",  "GET"])
 
 def signup():
-    firstname = request.form['firstname']
-    lastname = request.form['lastname']
-    email = request.form['email']
-    password = request.form['password']
-    new_user = User(firstname,lastname,email,password)
-    new_user.signup()
-    return render_template('dashboard.html', firstname = firstname)
+
+    if request.method == 'POST':
+        firstname = request.form['firstname']
+        lastname = request.form['lastname']
+        email = request.form['email']
+        password = request.form['password']
+
+        new_user = User(firstname,lastname,email,password)
+
+        new_user.signup(firstname,lastname,email,password)
+
+        return redirect(url_for('login'))
+
+    return render_template('signup.html')
 
 @app.route("/login", methods =["POST" , "GET"])
 
 def login():
-    firstname = request.form['firstname']
-    password = request.form['password']
-    new_user = User(email,password)
-    new_user.login()
 
-    return render_template('dashboard.html', firstname = firstname)
+    if request.method == 'POST':
+        firstname = request.form['firstname']
+        password = request.form['password']
+        new_user = User(firstname, password)
+
+        new_user.login(firstname, password)
+        return redirect(url_for('dashboard'))
+    return render_template('login.html')
 
 
-@app.route('/addcategories')
+@app.route('/addcategories' , methods =['POST', 'GET'])
 
 def addcategories():
-    new_category = Categories(categoryname)
-   
 
+    if request.method == 'POST':
+        caegoryname = request.form['categoryname']
+        new_user = User(categories)
+        new_user.add_category(categoryname)
+        return redirect(url_for('dashboard'))
     return render_template('categories.html')
+  
 
-@app.route('/viewcategories', methods=["POST"])
+@app.route('/viewcategories')
 
-def viewcategories():
-    categoryname = request.form['categoryname']
-    categories = []
-    categories.append(categoryname)
-
-    return render_template('dashboard.html', categoryname =categoryname )
+def viewcategories():  
+    new_user = User()
+    categories = new_user.view_categories()
+    return render_template('dashboard.html', categories = categories)    
+                                                                                                                                                                                                                                                     
 
 def deletecategories():
-    categoryname = request.form['categoryname']
-    categories = []
-    categories.append(categoryname)
+    new_user = User(categories)
+    new_user.delete_category(categories)
 
-    return render_template('dashboard.html', categoryname =categoryname )
+    return render_template('dashboard.html')
 
 
 
