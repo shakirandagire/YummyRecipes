@@ -6,6 +6,7 @@ from categories import Categories
 from recipes import Recipes
 from user import User
 app = Flask(__name__)
+new_user = User()
 
 @app.route('/')
 def main():
@@ -37,7 +38,6 @@ def signup():
 @app.route("/login", methods =["POST" , "GET"])
 
 def login():
-
     if request.method == 'POST':
         firstname = request.form['firstname']
         password = request.form['password']
@@ -48,32 +48,29 @@ def login():
     return render_template('login.html')
 
 
-@app.route('/addcategories' , methods =['POST', 'GET'])
-
+@app.route('/addcategories' , methods =['POST','GET'])
 def addcategories():
 
     if request.method == 'POST':
-        caegoryname = request.form['categoryname']
+        categoryname = request.form['categoryname']
         new_user = User(categories)
         new_user.add_category(categoryname)
         return redirect(url_for('dashboard'))
     return render_template('categories.html')
   
 
-@app.route('/viewcategories')
-
+@app.route('/viewcategories', methods =['POST', 'GET'])
 def viewcategories():  
     new_user = User()
     categories = new_user.view_categories()
     return render_template('dashboard.html', categories = categories)    
-                                                                                                                                                                                                                                                     
 
+
+@app.route('/deletecategories')
 def deletecategories():
     new_user = User(categories)
     new_user.delete_category(categories)
-
     return render_template('dashboard.html')
-
 
 
 @app.route('/addrecipe') 

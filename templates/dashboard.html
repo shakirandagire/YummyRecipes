@@ -31,11 +31,12 @@
         
        <h3>Your favorite Recipes</h3> 
           
-       {% for category in Categories%}
-              
-       <table><tr><td>Categories:{{categoryname}} </a></td></tr></table> <br>
-          
-       {%endfor%}
+          {%for category in categories%}
+                
+          <table><tr><td>Categories:{{category}} </a></td></tr></table> <br>
+            
+          {%endfor%}
+
       <button class="btn btn-default"><a href = "{{ url_for('addcategories')}} ">Add Recipe Category</a></button> 
       
       <button class="btn btn-default"><a href = "{{url_for('addrecipe')}}">Add Recipe</a></button> 
