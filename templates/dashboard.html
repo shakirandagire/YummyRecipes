@@ -23,7 +23,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="#"><span class="glyphicon glyphicon-user"></span> Hallo, {{firstname}}</a></li>
-                
+               <li><a href="{{ url_for('logout')}}">Logout</a></li> 
             </ul>
         </nav>
 
@@ -31,7 +31,7 @@
         
        <h3>Your favorite Recipes</h3> 
           
-          {%for category in categories%}
+          {%for category in range(categories)%}
                 
           <table><tr><td>Categories:{{category}} </a></td></tr></table> <br>
             

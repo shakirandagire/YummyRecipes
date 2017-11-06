@@ -1,21 +1,26 @@
 from flask import Flask
-from flask import render_template, request, url_for,redirect
-
-
+from flask import render_template, request, url_for,redirect,session
 from categories import Categories
 from recipes import Recipes
 from user import User
+
 app = Flask(__name__)
+app.secret_key = 'codegirl'
+
 new_user = User()
 
 @app.route('/')
 def main():
+   
     return render_template('home.html')
 
 @app.route('/dashboard')
 def dashboard():
+    if 'firstname' in session:
+        firstname = session['firstname']
     
-    return render_template('dashboard.html' )
+    return render_template('dashboard.html')
+
 
 @app.route("/signup", methods =["POST",  "GET"])
 
@@ -36,17 +41,18 @@ def signup():
     return render_template('signup.html')
 
 @app.route("/login", methods =["POST" , "GET"])
-
 def login():
     if request.method == 'POST':
-        firstname = request.form['firstname']
-        password = request.form['password']
-        new_user = User(firstname, password)
-
-        new_user.login(firstname, password)
-        return redirect(url_for('dashboard'))
+      session['firstname'] = request.form['firstname']
+        
+      return redirect(url_for('dashboard'))
     return render_template('login.html')
 
+@app.route('/logout')
+def logout():
+   # remove the username from the session if it is there
+   session.pop('firstname', None)
+   return redirect(url_for('main'))
 
 @app.route('/addcategories' , methods =['POST','GET'])
 def addcategories():
@@ -61,9 +67,11 @@ def addcategories():
 
 @app.route('/viewcategories', methods =['POST', 'GET'])
 def viewcategories():  
-    new_user = User()
-    categories = new_user.view_categories()
-    return render_template('dashboard.html', categories = categories)    
+    if request.method == "POST":
+        categoryname = request.form['categoryname']
+        new_user = User.categories
+        category = new_user.view_categories(categoryname)
+    return render_template('dashboard.html', categories = category)    
 
 
 @app.route('/deletecategories')

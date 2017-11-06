@@ -5,26 +5,38 @@ class User(object):
         self.lastname = lastname
         self.email = email
         self.password = password
-        self.categories =  []
+        self.categories = []
+        self.userstore = {}
+    
+    def signup(self,firstname,lastname, email, password):
+        if firstname in self.userstore:
+            return "You already have an account with us...........Please login"
+
+        else:
+           self.userstore.update({firstname:password})
+
 
     def login(self, firstname, password):
-        if firstname == self.firstname and password == self.password:
-            return True
+        if firstname in userstore and self.userstore[firstname] == password:
+           return "Welcome to Yummy recipes"
         else:
-            return False
+           return "Please enter the correct firstname and password or signup if you have no account"
 
-    def signup(self,firstname,lastname, email, password):
-        if firstname == self.firstname and lastname == self.lastname and email == self.email and password == self.password:
-            return True
-
+    
+    def add_category(self, category):
+        if category in categories:
+            return "Category already exists"
         else:
-            return False
+            self.categories.append(category)
 
-    def add_category(self, categories):
-        self.categories.append(category)
+    def delete_category(self, category):
+        if category in categories:
+            self.categories.remove(category)
+        else:
+            return "No category to delete"
 
-    def delete_category(self, categories):
-        self.categories.remove(category)
-
-    def view_categories(self):
-        return self.categories
+    def view_categories(self,category):
+        if category in categories:
+            return self.categories
+        else:
+            return "No categories"

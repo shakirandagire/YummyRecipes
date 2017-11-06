@@ -12,7 +12,7 @@ class Categories(object):
         if len(self.recipes) > 0 and recipe in self.recipes:
             self.recipes.remove(recipe)
         else:
-            raise ValueError
+            raise ValueError("No recipes in category")
 
     def view_recipes(self):
         return self.recipes
