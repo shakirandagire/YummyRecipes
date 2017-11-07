@@ -2,16 +2,20 @@ class Categories(object):
 
     def __init__(self, categoryname):
         self.categoryname = categoryname
-        
-        self.recipes = []
+       
+        self.recipes = {}
 
     def add_recipe(self, recipe):
-        
-        self.recipes.append(recipe)  
+        if recipe not in self.recipes.values():
+            self.recipes[recipe.recipename]= recipe
+
+
+
+
         
     def delete_recipe(self, recipe):
         if len(self.recipes) > 0 and recipe in self.recipes:
-            self.recipes.remove(recipe)
+            del self.recipes[recipe.name]
         else:
             raise ValueError("No recipes in category")
 

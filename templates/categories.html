@@ -29,7 +29,7 @@
 
         <p>Recipe Categories:</p> 
 
-        <form method = "POST" action="/viewcategories">
+        <form method = "POST" action="{{ url_for('addcategories') }}">
         <div class="form-group">
         <label>Name:</label>
         <input type="text" name = "categoryname" class="form-control" id="name">

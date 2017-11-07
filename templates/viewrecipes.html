@@ -28,15 +28,24 @@
 
             <p>Your favorite Recipes from top chefs</p> 
                         
-                Recipe name: {{recipename}} 
-              </br>
-                Description: {{description}}
-            </br>
-                
+            {%for recipe in my_recipe.keys() %}
+            
+                 <table>
+                    <tr><td>Categories:{{session["category"]}}</td></tr>
+                   <tr><td>Recipes:{{recipename}} </td></tr>
+                   <tr><td>Description:{{description}} </td></tr>
+                   
+                  
+                  </table> <br>
+        
+            {%endfor%}
+
             
                 <button class="btn btn-default"><a href = "{{ url_for('addcategories')}} ">Delete Recipe</a></button> 
                 
                 <button class="btn btn-default"><a href = "{{url_for('addrecipe')}}">Add Recipe</a></button> 
+
+                <button class="btn btn-default"><a href = "{{url_for('addrecipe')}}">Edit Recipe</a></button> 
           
         </div>
     </div>

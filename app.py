@@ -8,16 +8,19 @@ app = Flask(__name__)
 
 app.secret_key = "my secret key"
 
+# users = User("firstname","lastname","email","password")
+# my_category = Categories("categoryname","recipename", "description")
+
 @app.route('/')
 def main():
     return render_template('home.html')
 
 @app.route('/dashboard')
-def dashboard():
-    
-    return render_template('dashboard.html' )
+def dashboard():   
+    recipe_category = User.users_store[session['firstname']].categories
+    return render_template('dashboard.html', recipe_category = recipe_category) 
 
-@app.route("/signup", methods =["POST",  "GET"])
+@app.route("/signup", methods =["POST", "GET"])
 
 def signup():
 
@@ -47,8 +50,7 @@ def login():
             session["firstname"] = firstname
                  
             return redirect(url_for('dashboard'))
-        else:
-            
+        else:           
              return redirect(url_for('login'))
                 
     return render_template('login.html')
@@ -66,49 +68,65 @@ def addcategories():
     if 'firstname' not in session:
       
         return render_template('login.html')
-    else:
-        firstname = [session['firstname']]
-   
+    
     if request.method == 'POST':
-        category = request.form['categoryname']
+        category_name = request.form['categoryname']
 
-        return redirect(url_for('dashboard'))
+        category = Categories(category_name)
+        session['category_name']= category_name
+        User.users_store[category_name] = category
+        return redirect(url_for('viewcategories'))
+
     return render_template('categories.html')
   
 
-@app.route('/viewcategories', methods =['POST', 'GET'])
-def viewcategories():  
-    new_user = User()
-    categories = new_user.view_categories()
-    return render_template('dashboard.html', categories = categories)    
+@app.route('/viewcategories')
+def viewcategories():
+    category_name = session['category_name']
+    recipe_category = User.users_store
+    return render_template('dashboard.html', recipe_category = recipe_category, category_name = category_name) 
 
 
-@app.route('/deletecategories')
-def deletecategories():
+@app.route('/deletecategories/<category_name>')
+def deletecategories(category_name):
+    User.users_store[session['firstname']].delete_category(category_name)
+    
+    return render_template('dashboard.html')
+
+@app.route('/editcategories')
+def editcategories():
     new_user = User(categories)
     new_user.delete_category(categories)
+
     return render_template('dashboard.html')
 
 
-@app.route('/addrecipe') 
+@app.route('/addrecipe', methods = ['POST','GET']) 
 def addrecipe():
+
+    if 'firstname' not in session: 
+
+        return render_template('login.html')
+
+    if 'categories' not in session: 
+
+        return render_template('categories.html')
+        firstname = [session['firstname']]
+        category =  [session['category']]
+   
+    if request.method == 'POST':
+        recipe_name = request.form['recipename']
+        recipe_description = request.form['description']
+        my_category.add_recipe(category,recipe_name,recipe_description)
+        return redirect(url_for('viewrecipes'))
 
     return render_template('addrecipe.html')
 
-@app.route('/viewrecipes', methods = ['POST'])
 
-def viewrecipes():
-
-    recipename = request.form['recipename']
-    description = request.form['description']
-    recipes = []
-    recipes.append(recipename)
-    recipes.append(description)
-
-   
-
-    return render_template('viewrecipes.html', recipename =recipename, description = description)
- 
+@app.route('/viewrecipes', methods = ['POST', 'GET'])
+def viewrecipes():  
+    my_recipe = my_category.recipes
+    return render_template('viewrecipes.html', my_recipe = my_recipe) 
 
     
 if __name__=="__main__":

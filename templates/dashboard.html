@@ -31,17 +31,20 @@
         
        <h3>Your favorite Recipes</h3> 
           
-          {%for category in categories%}
+          {% for category in recipe_category.keys() %}
                 
-          <table><tr><td>Categories:{{category}} </a></td></tr></table> <br>
-            
+        <table><tr><td> <a href ="{{url_for('addrecipe')}}">Categories:{{category}} </a></td></tr>
+        
+          <tr><td><button class="btn btn-default"><a href = "/deletecategories/{{category_name}} ">Delete Category</a></button> </td></tr>
+       
+          <tr><td> <button class="btn btn-default"><a href = "{{url_for('editcategories')}}">Edit Category</a></button> </td></tr>
+
+        </table> <br>
+
           {%endfor%}
 
-      <button class="btn btn-default"><a href = "{{ url_for('addcategories')}} ">Add Recipe Category</a></button> 
-      
-      <button class="btn btn-default"><a href = "{{url_for('addrecipe')}}">Add Recipe</a></button> 
-
-      
+        <button class="btn btn-default"><a href = "{{ url_for('addcategories')}} ">Add Category</a></button> 
+               
       </div>     
  
   </body>
