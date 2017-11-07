@@ -1,12 +1,12 @@
-from flask import Flask
-from flask import render_template, request, url_for,redirect
+from flask import Flask, render_template, request, url_for,redirect,session
 
 
-from categories import Categories
-from recipes import Recipes
-from user import User
+from controller.categories import Categories
+
+from controller.user import User
 app = Flask(__name__)
-new_user = User()
+
+app.secret_key = "my secret key"
 
 @app.route('/')
 def main():
@@ -27,9 +27,9 @@ def signup():
         email = request.form['email']
         password = request.form['password']
 
-        new_user = User(firstname,lastname,email,password)
+        # new_user.signup(firstname,lastname,email,password)
 
-        new_user.signup(firstname,lastname,email,password)
+        User.signup(firstname,lastname,email,password)
 
         return redirect(url_for('login'))
 
@@ -41,20 +41,33 @@ def login():
     if request.method == 'POST':
         firstname = request.form['firstname']
         password = request.form['password']
-        new_user = User(firstname, password)
-
-        new_user.login(firstname, password)
-        return redirect(url_for('dashboard'))
+       
+        # new_user.login(firstname, password)
+        if User.login(firstname, password):
+            session["firstname"] = firstname
+                 
+            return redirect(url_for('dashboard'))
+        else:
+            
+             return redirect(url_for('login'))
+                
     return render_template('login.html')
 
+@app.route("/logou", methods =["POST" , "GET"])
+
+def logout():
+    session.pop('username', None)
+  
+    return redirect(url_for('home'))
 
 @app.route('/addcategories' , methods =['POST','GET'])
 def addcategories():
 
     if request.method == 'POST':
         categoryname = request.form['categoryname']
-        new_user = User(categories)
-        new_user.add_category(categoryname)
+
+        User.add_category(categoryname)
+
         return redirect(url_for('dashboard'))
     return render_template('categories.html')
   

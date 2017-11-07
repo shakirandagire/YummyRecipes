@@ -1,7 +1,8 @@
 class Categories(object):
 
-    def __init__(self, categoryname, recipes=None):
+    def __init__(self, categoryname):
         self.categoryname = categoryname
+        
         self.recipes = []
 
     def add_recipe(self, recipe):
