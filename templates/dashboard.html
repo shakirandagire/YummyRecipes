@@ -22,8 +22,8 @@
               <li><a href="{{ url_for('dashboard')}} ">Recipes</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#"><span class="glyphicon glyphicon-user"></span> Hallo, {{firstname}}</a></li>
-               <li><a href="{{ url_for('logout')}}">Logout</a></li> 
+              <li><a href="#"><span class="glyphicon glyphicon-user"></span> Hallo, {{session["firstname"]}}</a></li>
+              <li><a href="{{ url_for('logout')}} ">Logout</a></li>
             </ul>
         </nav>
 
