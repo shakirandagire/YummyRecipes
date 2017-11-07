@@ -1,6 +1,6 @@
 import unittest
 
-from user import User
+from controller.user import User
 
 class TestCategories(unittest.TestCase):
     def setUp(self):

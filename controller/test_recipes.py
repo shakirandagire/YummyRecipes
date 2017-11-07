@@ -1,6 +1,6 @@
 import unittest
 
-from categories import Categories
+from controller.categories import Categories
 
 class TestRecipes(unittest.TestCase):
     def setUp(self):
