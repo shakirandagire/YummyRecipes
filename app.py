@@ -62,11 +62,15 @@ def logout():
 
 @app.route('/addcategories' , methods =['POST','GET'])
 def addcategories():
-
+        
+    if 'firstname' not in session:
+      
+        return render_template('login.html')
+    else:
+        firstname = [session['firstname']]
+   
     if request.method == 'POST':
-        categoryname = request.form['categoryname']
-
-        User.add_category(categoryname)
+        category = request.form['categoryname']
 
         return redirect(url_for('dashboard'))
     return render_template('categories.html')

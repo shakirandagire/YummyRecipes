@@ -2,7 +2,7 @@ class User:
     
     users_store = {}
    
-    def __init__(self,firstname,lastname, email, password):
+    def __init__(self,firstname=None,lastname=None, email=None, password=None, categories=None):
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
@@ -15,6 +15,8 @@ class User:
     def login(cls,first_name, password):
         if first_name == cls.users_store[first_name].firstname:
             return True
+        else:
+            return False
         
 
     @classmethod   
