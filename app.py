@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, url_for,redirect,session
 
-
 from controller.categories import Categories
 
 from controller.user import User
@@ -8,31 +7,25 @@ app = Flask(__name__)
 
 app.secret_key = "my secret key"
 
-# users = User("firstname","lastname","email","password")
-# my_category = Categories("categoryname","recipename", "description")
-
 @app.route('/')
 def main():
     return render_template('home.html')
 
 @app.route('/dashboard')
 def dashboard():   
-    recipe_category = User.users_store[session['firstname']].categories
-    return render_template('dashboard.html', recipe_category = recipe_category) 
+    return render_template('dashboard.html') 
 
 @app.route("/signup", methods =["POST", "GET"])
 
 def signup():
 
     if request.method == 'POST':
-        firstname = request.form['firstname']
-        lastname = request.form['lastname']
-        email = request.form['email']
+        username = request.form['username']
         password = request.form['password']
 
         # new_user.signup(firstname,lastname,email,password)
 
-        User.signup(firstname,lastname,email,password)
+        User.signup(username,password)
 
         return redirect(url_for('login'))
 
@@ -42,12 +35,12 @@ def signup():
 
 def login():
     if request.method == 'POST':
-        firstname = request.form['firstname']
+        username = request.form['username']
         password = request.form['password']
        
         # new_user.login(firstname, password)
-        if User.login(firstname, password):
-            session["firstname"] = firstname
+        if User.login(username, password):
+            session["username"] = username
                  
             return redirect(url_for('dashboard'))
         else:           
@@ -62,43 +55,37 @@ def logout():
   
     return redirect(url_for('main'))
 
-@app.route('/addcategories' , methods =['POST','GET'])
+@app.route('/addcategories' , methods = ['POST','GET'])
 def addcategories():
-        
-    if 'firstname' not in session:
-      
-        return render_template('login.html')
-    
+    # return request.method
     if request.method == 'POST':
+        # return request.method
         category_name = request.form['categoryname']
-
-        category = Categories(category_name)
-        session['category_name']= category_name
-        User.users_store[category_name] = category
+        # category = Categories(category_name)
+        Categories.add_category(category_name)
+        # return Categories.view_categories()
         return redirect(url_for('viewcategories'))
-
+        
     return render_template('categories.html')
   
 
 @app.route('/viewcategories')
 def viewcategories():
-    category_name = session['category_name']
-    recipe_category = User.users_store
-    return render_template('dashboard.html', recipe_category = recipe_category, category_name = category_name) 
+    # category_name = request.form['categoryname']
+    # category = Categories(category_name)
+    recipe_category = Categories.view_categories()
+    return render_template('viewcategories.html', recipe_category = recipe_category) 
 
 
-@app.route('/deletecategories/<category_name>')
-def deletecategories(category_name):
-    User.users_store[session['firstname']].delete_category(category_name)
-    
-    return render_template('dashboard.html')
+@app.route('/deletecategories/<categoryname>')
+def deletecategories(categoryname):
+    Categories.delete_category(categoryname)    
+    return redirect(url_for('viewcategories'))
 
-@app.route('/editcategories')
-def editcategories():
-    new_user = User(categories)
-    new_user.delete_category(categories)
-
-    return render_template('dashboard.html')
+@app.route('/editcategories/<categoryname>')
+def editcategories(categoryname):
+    Categories.edit_category(categoryname)    
+    return redirect(url_for('viewcategories'))
 
 
 @app.route('/addrecipe', methods = ['POST','GET']) 
