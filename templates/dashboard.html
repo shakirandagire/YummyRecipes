@@ -20,6 +20,7 @@
             <ul class="nav navbar-nav">
               <li><a href="{{ url_for('main')}}">Home</a></li>
               <li><a href="{{ url_for('dashboard')}} ">Recipes</a></li>
+              <li><a href="{{ url_for('addcategories')}} ">Categories</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="#"><span class="glyphicon glyphicon-user"></span> Hallo, {{session["firstname"]}}</a></li>
@@ -28,22 +29,8 @@
         </nav>
 
       <div class = "container">
-        
-       <h3>Your favorite Recipes</h3> 
-          
-          {% for category in recipe_category.keys() %}
-                
-        <table><tr><td> <a href ="{{url_for('addrecipe')}}">Categories:{{category}} </a></td></tr>
-        
-          <tr><td><button class="btn btn-default"><a href = "/deletecategories/{{category_name}} ">Delete Category</a></button> </td></tr>
-       
-          <tr><td> <button class="btn btn-default"><a href = "{{url_for('editcategories')}}">Edit Category</a></button> </td></tr>
 
-        </table> <br>
-
-          {%endfor%}
-
-        <button class="btn btn-default"><a href = "{{ url_for('addcategories')}} ">Add Category</a></button> 
+         
                
       </div>     
  
