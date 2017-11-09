@@ -7,9 +7,9 @@ class Categories:
         self.category_store = {}
 
     @classmethod
-    def add_category(self, category):
+    def add_category(self, categoryname):
         # if category not in self.category_store.values():
-        self.category_store[category] = category
+        self.category_store[categoryname] = categoryname
 
     @classmethod
     def delete_category(self, categoryname):

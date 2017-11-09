@@ -23,7 +23,7 @@
             <li><a href="{{ url_for('viewcategories')}} ">Categories</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Hallo, {{session["firstname"]}}</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Hallo, {{session["username"]}}</a></li>
             <li><a href="{{ url_for('logout')}} ">Logout</a></li>
           </ul>
     </nav>
@@ -52,7 +52,17 @@
               </a>
             </button>
           </td> 
-          <td><button class="btn btn-default"><a href = "">Edit Category</a></button> </td>
+          <td>
+            
+          </td>
+
+          <td>
+              <button class="btn btn-default">
+                <a href = {{ url_for('addrecipe',  categoryname=key) }}>
+                  Add recipe
+                </a>
+              </button> 
+            </td>
         </tr>
 
         {%endfor%}

@@ -26,27 +26,44 @@
 
         <div class="container">
 
-            <p>Your favorite Recipes from top chefs</p> 
-                        
-            {%for recipe in my_recipe.keys() %}
-            
-                 <table>
-                    <tr><td>Categories:{{session["category"]}}</td></tr>
-                   <tr><td>Recipes:{{recipename}} </td></tr>
-                   <tr><td>Description:{{description}} </td></tr>
-                   
-                  
-                  </table> <br>
-        
-            {%endfor%}
-
-            
-                <button class="btn btn-default"><a href = "{{ url_for('addcategories')}} ">Delete Recipe</a></button> 
+            <div class="row">
+                <div class="span3 pull-left">
+                  <h3>Your favorite Recipes from top chefs</h3>  
+                </div>
+                <div class="span6 pull-right">
+                  <button class="btn btn-default"><a href = {{ url_for('getcategory')}} >Add Recipe</a></button>                        
+                </div>  
+              </div> 
+           
+            <table class="table">
+                <tr>
+                  <th>Recipe Name</th>
+                  <th>Description</th> 
+                  <th></th>
+                  <th></th>
+                </tr>
                 
-                <button class="btn btn-default"><a href = "{{url_for('addrecipe')}}">Add Recipe</a></button> 
+                <tr>
 
-                <button class="btn btn-default"><a href = "{{url_for('addrecipe')}}">Edit Recipe</a></button> 
-          
+                  {%for recipe_name,recipe_description in my_recipe %}
+
+                  <td>{{ recipe_name }}</td>
+
+                  <td>{{ recipe_description }}</td>
+
+                  {%endfor%}
+                
+                  <td>
+                      <button class="btn btn-default">
+                        <a href = {{ url_for('deleterecipe', recipe_name, recipe_description ) }}>
+                          Delete Recipe
+                        </a>
+                      </button>
+                    </td> 
+                  </td> 
+                </tr>
+
+                </table>             
         </div>
     </div>
   </body>

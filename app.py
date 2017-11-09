@@ -3,6 +3,8 @@ from flask import Flask, render_template, request, url_for,redirect,session
 from controller.categories import Categories
 
 from controller.user import User
+
+from controller.recipes import Recipe
 app = Flask(__name__)
 
 app.secret_key = "my secret key"
@@ -76,46 +78,53 @@ def viewcategories():
     recipe_category = Categories.view_categories()
     return render_template('viewcategories.html', recipe_category = recipe_category) 
 
+@app.route('/getcategory')
+def getcategory():
+  
+    recipe_category = Categories.view_categories()
+    return render_template('addrecipe.html', recipe_category = recipe_category) 
+
 
 @app.route('/deletecategories/<categoryname>')
 def deletecategories(categoryname):
     Categories.delete_category(categoryname)    
     return redirect(url_for('viewcategories'))
 
-@app.route('/editcategories/<categoryname>')
-def editcategories(categoryname):
-    Categories.edit_category(categoryname)    
-    return redirect(url_for('viewcategories'))
+
+@app.route('/editcategories/<categoryname>', methods = ['POST','GET'])
+def editcategories(categoryname): 
+    
+    if request.method == 'POST':
+        new_categoryname = request.form["new_categoryname"]
+        Categories.edit_category(categoryname,new_categoryname)
+        return redirect(url_for('viewcategories'))
 
 
 @app.route('/addrecipe', methods = ['POST','GET']) 
-def addrecipe():
-
-    if 'firstname' not in session: 
-
-        return render_template('login.html')
-
-    if 'categories' not in session: 
-
-        return render_template('categories.html')
-        firstname = [session['firstname']]
-        category =  [session['category']]
-   
+def addrecipe():   
     if request.method == 'POST':
         recipe_name = request.form['recipename']
         recipe_description = request.form['description']
-        my_category.add_recipe(category,recipe_name,recipe_description)
-        return redirect(url_for('viewrecipes'))
+        Recipe.add_recipe(recipe_name,recipe_description)
+        session['recipe_name']= recipe_name
+        session['recipe_description'] = recipe_description
+        return redirect(url_for('viewrecipes',))
 
     return render_template('addrecipe.html')
 
 
 @app.route('/viewrecipes', methods = ['POST', 'GET'])
 def viewrecipes():  
-    my_recipe = my_category.recipes
+    my_recipe = Recipe.view_recipes()
     return render_template('viewrecipes.html', my_recipe = my_recipe) 
 
-    
+@app.route('/deleterecipe/<recipename>/<description>')
+def deleterecipe(recipename,description):
+    Recipe.delete_recipe(recipename,description)    
+    return redirect(url_for('viewrecipes'))
+
+
+
 if __name__=="__main__":
     app.run(debug=True)
     

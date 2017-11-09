@@ -28,21 +28,32 @@
 
             <p>Recipes</p> 
             
-            <form method = "POST" action = "/viewrecipes">
-              <div class="form-group">
+            <form method = "POST" action = "/addrecipe">
+
+             
+                <div class="form-group">
+                <label>Category:</label>
+                {% for key in recipe_category %}
+                
+                <input type="text" name = "categoryname" class="form-control" value="{{key}}">
+
+                {%  endfor %}
+                </div>
+            
+              <div class="form-group">  
               <label>Name:</label>
-              <input type="text" name = "recipename" class="form-control" id="recipename">
+              <input type="text" name = "recipename" class="form-control">
               </div>
                         
               <div class="form-group">
               <label>Description:</label>
-              <input type="text" name = "description" class="form-control" id="description">
+              <input type="text" name = "description" class="form-control">
               </div>
           
-            <button type="submit" class="btn btn-default">Add Recipe</button>
+              <button type="submit" class="btn btn-default">Add Recipe</button>
             </form>
             
         </div>
-    </div>
+      </div>
   </body>
 </html>
