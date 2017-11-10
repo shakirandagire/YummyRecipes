@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href= {{ url_for('static', filename='css/style.css') }}">
   </head>
 
-  
-  <body>
+  <body background = {{ url_for('static', filename='img/food1.jpg') }}>
 
       <nav class="navbar navbar-inverse">
           <div class="container-fluid">
@@ -28,9 +28,11 @@
 
       <div class="container">
 
-           <b> <p> Do you love cooking and eating amazing food and cannot keep track of your favorite chef's recipe</p> 
-            <p> We have got you </p>
-            <p> View our amazing recipes</p> </b
+           <h3> Do you love cooking and eating amazing food and cannot keep track of your favorite chef's recipe</h3> 
+            <h3> We have got you </h3>
+            <h3> View our amazing recipes by simply signing up</h3>
+
+            <button class="btn btn-default" align = "centre" style="height:50px; width:150px" > <a href="{{ url_for('signup')}}">Sign Up </a></button>
 
       </div>
     

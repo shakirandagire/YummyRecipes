@@ -9,11 +9,8 @@ class Recipe:
 
     @classmethod
     def add_recipe(self, recipename, description):
-        self.recipe_store[recipename] = recipename
-        self.recipe_store[description] = description
+        self.recipe_store[recipename] = description 
           
-        # {"Name":recipename, "Description":description}
-
     @classmethod  
     def delete_recipe(self, recipename,description):
        if recipename in self.recipe_store:
@@ -22,7 +19,7 @@ class Recipe:
     @classmethod
     def edit_recipe(self,recipename,new_recipename):
         if recipename in self.recipe_store:
-            self.recipe_store[recipename] = new_recipename
+            self.recipe_store[new_recipename] = self.recipe_store.pop(recipename)
 
     @classmethod
     def view_recipes(self):

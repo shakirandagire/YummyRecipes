@@ -19,7 +19,7 @@ class Categories:
     @classmethod
     def edit_category(self,categoryname,new_categoryname):
         if categoryname in self.category_store:
-            self.category_store[categoryname] = new_categoryname
+            self.category_store[new_categoryname] = self.category_store.pop(categoryname)
 
     @classmethod
     def view_categories(self):

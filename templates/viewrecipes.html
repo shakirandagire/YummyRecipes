@@ -31,9 +31,11 @@
                   <h3>Your favorite Recipes from top chefs</h3>  
                 </div>
                 <div class="span6 pull-right">
-                  <button class="btn btn-default"><a href = {{ url_for('getcategory')}} >Add Recipe</a></button>                        
+                  <button class="btn btn-default"><a href ='/getcategory/categoryname' >Add Recipe</a></button>                        
                 </div>  
               </div> 
+
+              {{my_recipe}}
            
             <table class="table">
                 <tr>
@@ -45,17 +47,25 @@
                 
                 <tr>
 
-                  {%for recipe_name,recipe_description in my_recipe %}
+                  {%for key in my_recipe.items()%}
 
-                  <td>{{ recipe_name }}</td>
+                  <td>{{key}}</td>
 
-                  <td>{{ recipe_description }}</td>
+                  <td>{{value}}</td>
 
+                 
                   {%endfor%}
-                
                   <td>
                       <button class="btn btn-default">
-                        <a href = {{ url_for('deleterecipe', recipe_name, recipe_description ) }}>
+                        <a href = "">
+                         Edit Recipe
+                        </a>
+                      </button>
+                    </td> 
+
+                    <td>
+                      <button class="btn btn-default">
+                        <a href = "">
                           Delete Recipe
                         </a>
                       </button>
@@ -63,7 +73,7 @@
                   </td> 
                 </tr>
 
-                </table>             
+              </table>             
         </div>
     </div>
   </body>

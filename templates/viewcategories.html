@@ -1,3 +1,9 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -53,12 +59,16 @@
             </button>
           </td> 
           <td>
-            
-          </td>
+            <button class="btn btn-default">
+              <a href = {{ url_for('editcategories', categoryname = key)}}>
+               Edit Category
+              </a>
+            </button>
+          </td> 
 
           <td>
               <button class="btn btn-default">
-                <a href = {{ url_for('addrecipe',  categoryname=key) }}>
+                <a href ='/getcategory/{{key}}'>
                   Add recipe
                 </a>
               </button> 
@@ -72,3 +82,4 @@
  
   </body>
 </html>
+{%endblock%}

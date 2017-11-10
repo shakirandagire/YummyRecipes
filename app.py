@@ -1,13 +1,18 @@
-from flask import Flask, render_template, request, url_for,redirect,session
+from flask import Flask, render_template, request, url_for,redirect,session,flash
 
-from controller.categories import Categories
+from models.categories import Categories
 
-from controller.user import User
+from models.user import User
 
-from controller.recipes import Recipe
+from models.recipes import Recipe
+
+from flask_bootstrap import Bootstrap
+
 app = Flask(__name__)
 
 app.secret_key = "my secret key"
+
+bootstrap = Bootstrap(app)
 
 @app.route('/')
 def main():
@@ -29,6 +34,8 @@ def signup():
 
         User.signup(username,password)
 
+        flash("Signed up successfully, Please log in")
+
         return redirect(url_for('login'))
 
     return render_template('signup.html')
@@ -40,13 +47,18 @@ def login():
         username = request.form['username']
         password = request.form['password']
        
-        # new_user.login(firstname, password)
+        session["username"] = username
+
         if User.login(username, password):
-            session["username"] = username
                  
             return redirect(url_for('dashboard'))
-        else:           
-             return redirect(url_for('login'))
+
+            
+            flash("Logged in successfully")
+        else:  
+            flash("Wrong details.......Please login") 
+
+            return redirect(url_for('login'))
                 
     return render_template('login.html')
 
@@ -73,31 +85,40 @@ def addcategories():
 
 @app.route('/viewcategories')
 def viewcategories():
-    # category_name = request.form['categoryname']
-    # category = Categories(category_name)
     recipe_category = Categories.view_categories()
     return render_template('viewcategories.html', recipe_category = recipe_category) 
 
-@app.route('/getcategory')
-def getcategory():
-  
-    recipe_category = Categories.view_categories()
-    return render_template('addrecipe.html', recipe_category = recipe_category) 
+@app.route('/getcategory/<categoryname>')
+def getcategory(categoryname):  
+    recipe_category = Categories.view_categories()      
+    return render_template('addrecipe.html',recipe_category = recipe_category) 
 
 
 @app.route('/deletecategories/<categoryname>')
 def deletecategories(categoryname):
-    Categories.delete_category(categoryname)    
+    Categories.delete_category(categoryname) 
+
+    flash ("Category deleted successfully")   
     return redirect(url_for('viewcategories'))
 
 
-@app.route('/editcategories/<categoryname>', methods = ['POST','GET'])
-def editcategories(categoryname): 
-    
+@app.route('/editcategories', methods = ['POST','GET'])
+
+def editcategories():   
+ 
     if request.method == 'POST':
+        
+        categoryname = request.form["categoryname"]
+        
         new_categoryname = request.form["new_categoryname"]
+
         Categories.edit_category(categoryname,new_categoryname)
+
+        flash ("Category updated")
+
         return redirect(url_for('viewcategories'))
+
+    return render_template('editcategories.html' )
 
 
 @app.route('/addrecipe', methods = ['POST','GET']) 
@@ -106,9 +127,8 @@ def addrecipe():
         recipe_name = request.form['recipename']
         recipe_description = request.form['description']
         Recipe.add_recipe(recipe_name,recipe_description)
-        session['recipe_name']= recipe_name
-        session['recipe_description'] = recipe_description
-        return redirect(url_for('viewrecipes',))
+
+        return redirect(url_for('viewrecipes'))
 
     return render_template('addrecipe.html')
 

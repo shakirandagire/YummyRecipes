@@ -27,18 +27,15 @@
         <div class="container">
 
             <p>Recipes</p> 
+
+            {% for key, value in recipe_category.items() %}
             
-            <form method = "POST" action = "/addrecipe">
+              <p>Recipes for {{value}}</p>
 
-             
-                <div class="form-group">
-                <label>Category:</label>
-                {% for key in recipe_category %}
-                
-                <input type="text" name = "categoryname" class="form-control" value="{{key}}">
-
-                {%  endfor %}
-                </div>
+           {% endfor %}
+          
+            
+            <form method = "POST" action="/addrecipe">       
             
               <div class="form-group">  
               <label>Name:</label>
