@@ -8,8 +8,10 @@ class Categories:
 
     @classmethod
     def add_category(self, categoryname):
-        # if category not in self.category_store.values():
-        self.category_store[categoryname] = categoryname
+        if categoryname not in self.category_store.values() and categoryname != "":
+            self.category_store[categoryname] = categoryname
+            return True
+        return False
 
     @classmethod
     def delete_category(self, categoryname):

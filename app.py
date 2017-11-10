@@ -66,7 +66,6 @@ def login():
 
 def logout():
     session.pop('username', None)
-  
     return redirect(url_for('main'))
 
 @app.route('/addcategories' , methods = ['POST','GET'])
@@ -78,6 +77,7 @@ def addcategories():
         # category = Categories(category_name)
         Categories.add_category(category_name)
         # return Categories.view_categories()
+        flash("Category added")
         return redirect(url_for('viewcategories'))
         
     return render_template('categories.html')
@@ -104,14 +104,16 @@ def deletecategories(categoryname):
 
 @app.route('/editcategories', methods = ['POST','GET'])
 
-def editcategories():   
+def editcategories():  
  
     if request.method == 'POST':
         
         categoryname = request.form["categoryname"]
         
         new_categoryname = request.form["new_categoryname"]
-
+        
+        print (categoryname)
+    
         Categories.edit_category(categoryname,new_categoryname)
 
         flash ("Category updated")
@@ -119,7 +121,6 @@ def editcategories():
         return redirect(url_for('viewcategories'))
 
     return render_template('editcategories.html' )
-
 
 @app.route('/addrecipe', methods = ['POST','GET']) 
 def addrecipe():   

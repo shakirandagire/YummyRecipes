@@ -1,10 +1,10 @@
 import unittest
 
-from controller.user import User
+from models.categories import Categories
 
 class TestCategories(unittest.TestCase):
     def setUp(self):
-        self.user = User ("firstname", "lastname", "email", "password")
+       self.categories = Categories
 
     def test_to_add_category(self):
         self.user.add_category("chicken")

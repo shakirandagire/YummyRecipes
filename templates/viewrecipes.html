@@ -20,6 +20,7 @@
                         <ul class="nav navbar-nav">
                           <li><a href="{{ url_for('main')}}">Home</a></li>
                           <li><a href="{{ url_for('dashboard')}} ">Recipes</a></li>
+                          <li><a href="{{ url_for('addcategories')}} ">Categories</a></li>
                         </ul>
                 </div>
             </nav>
@@ -34,8 +35,6 @@
                   <button class="btn btn-default"><a href ='/getcategory/categoryname' >Add Recipe</a></button>                        
                 </div>  
               </div> 
-
-              {{my_recipe}}
            
             <table class="table">
                 <tr>
@@ -45,16 +44,12 @@
                   <th></th>
                 </tr>
                 
+                {%for key in my_recipe.items()%}
                 <tr>
 
-                  {%for key in my_recipe.items()%}
-
-                  <td>{{key}}</td>
-
-                  <td>{{value}}</td>
-
+                  <td>{{key[0]}}</td>
+                  <td>{{key[1]}}</td>             
                  
-                  {%endfor%}
                   <td>
                       <button class="btn btn-default">
                         <a href = "">
@@ -72,6 +67,8 @@
                     </td> 
                   </td> 
                 </tr>
+
+      {%endfor%}
 
               </table>             
         </div>
