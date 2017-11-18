@@ -14,19 +14,16 @@ class Categories:
         return False
 
     @classmethod
-    def delete_category(self, categoryname):
-        if categoryname in self.category_store:
-            self.category_store.pop(categoryname)
+    def delete_category(cls, categoryname):
+        if categoryname in cls.category_store:
+            cls.category_store.pop(categoryname)
 
     @classmethod
     def edit_category(self,categoryname,new_categoryname):
         if categoryname in self.category_store:
             self.category_store[new_categoryname] = self.category_store.pop(categoryname)
+            return True
 
     @classmethod
     def view_categories(self):
         return self.category_store
-
-
-    
-    

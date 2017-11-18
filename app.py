@@ -7,12 +7,25 @@ from models.user import User
 from models.recipes import Recipe
 
 from flask_bootstrap import Bootstrap
+user_store ={}
 
 app = Flask(__name__)
 
 app.secret_key = "my secret key"
 
 bootstrap = Bootstrap(app)
+def sign_up(username,password):
+    if username and password:
+        user_store[username]= User(username,password)
+    
+
+
+def log_in(username,password):
+    if username and password:
+        if user_store.get(username):
+            if  password == user_store[username].password:
+                return True
+
 
 @app.route('/')
 def main():
@@ -32,7 +45,7 @@ def signup():
 
         # new_user.signup(firstname,lastname,email,password)
 
-        User.signup(username,password)
+        sign_up(username,password)
 
         flash("Signed up successfully, Please log in")
 
@@ -49,13 +62,15 @@ def login():
        
         session["username"] = username
 
-        if User.login(username, password):
-                 
-            return redirect(url_for('dashboard'))
+        if username == session["username"] and username != " ":
 
-            
-            flash("Logged in successfully")
-        else:  
+            result = log_in(username, password)
+            if result == True:
+                 
+                return redirect(url_for('dashboard'))
+           
+                flash("Logged in successfully")
+          
             flash("Wrong details.......Please login") 
 
             return redirect(url_for('login'))
@@ -70,16 +85,12 @@ def logout():
 
 @app.route('/addcategories' , methods = ['POST','GET'])
 def addcategories():
-    # return request.method
-    if request.method == 'POST':
-        # return request.method
-        category_name = request.form['categoryname']
-        # category = Categories(category_name)
-        Categories.add_category(category_name)
-        # return Categories.view_categories()
+  
+    if request.method == 'POST':   
+        category_name = request.form['categoryname']   
+        Categories.add_category(category_name)     
         flash("Category added")
-        return redirect(url_for('viewcategories'))
-        
+        return redirect(url_for('viewcategories'))       
     return render_template('categories.html')
   
 
@@ -102,13 +113,11 @@ def deletecategories(categoryname):
     return redirect(url_for('viewcategories'))
 
 
-@app.route('/editcategories', methods = ['POST','GET'])
+@app.route('/editcategories/<categoryname>', methods = ['POST','GET'])
 
-def editcategories():  
- 
+def editcategories(categoryname):  
+    categoryname = session[categoryname]
     if request.method == 'POST':
-        
-        categoryname = request.form["categoryname"]
         
         new_categoryname = request.form["new_categoryname"]
         
@@ -120,7 +129,7 @@ def editcategories():
 
         return redirect(url_for('viewcategories'))
 
-    return render_template('editcategories.html' )
+    return render_template('editcategories.html', categoryname= categoryname )
 
 @app.route('/addrecipe', methods = ['POST','GET']) 
 def addrecipe():   
