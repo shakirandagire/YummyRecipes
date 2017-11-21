@@ -1,23 +1,25 @@
 class User:
     
-    users_store ={}
+    user_store ={}
    
     def __init__(self,username, password):
         self.username = username
         self.password = password
+        self.category_store = {}
+        
         
     @classmethod
-    def login(cls,username, password):
-        
-        if username == cls.users_store[username].username:
+    def sign_up(cls,username,password):
+        if username and password:
+            cls.user_store[username]= User(username,password)
             return True
-        else:
-            return False
-        
-    @classmethod   
-    def signup(cls,username, password):
-        new_user = cls(username,password)
-        cls.users_store[new_user.username] =  new_user
-        
+    
+    @classmethod
+    def log_in(cls,username,password):
+        if username and password:
+            if cls.user_store.get(username):
+                if  password == cls.user_store[username].password:
+                    return True
+
 
     

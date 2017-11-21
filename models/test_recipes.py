@@ -1,12 +1,12 @@
 import unittest
 
-from controller.categories import Categories
+from categories import Categories
 
 class TestRecipes(unittest.TestCase):
     def setUp(self):
         self.categories = Categories("categoryname")
 
-    def test_to_add_recipe(self):
+    def test_add_recipe(self):
         self.categories.add_recipe("chicken curry")
         self.assertEqual(self.categories.view_recipes(), ["chicken curry"], msg='Added recipe to category')
 
