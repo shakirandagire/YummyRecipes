@@ -14,8 +14,8 @@ class TestCategories(unittest.TestCase):
         self.assertEqual(self.categories.add_category("lunch"), "recipe category already exists")
 
     def test_edit_recipe_category_successful(self):
-        self.categories.add_recipe_category("Snacks")
-        self.assertEqual(self.categories.edit_recipe_category("Snacks","local foods"),"recipe_category not found")
+        self.categories.add_category("Snacks")
+        self.assertEqual(self.categories.edit_category("Snacks","local foods"),"recipe_category not found")
         
     def test_category_not_found(self):
         self.assertEqual(self.categories.delete_category("dinner"), "category does not exist")
@@ -24,7 +24,7 @@ class TestCategories(unittest.TestCase):
         self.assertEqual(self.categories.delete_category(""),"category deleted")
         
     def test_view_category(self):
-        self.assertEqual(self.categories.view_categories(""), "No categories found")
+        self.assertEqual(self.categories.view_categories(), "No categories found")
 
 
 if __name__ == '__main__':

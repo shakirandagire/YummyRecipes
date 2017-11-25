@@ -7,6 +7,9 @@ from flask_bootstrap import Bootstrap
 app = Flask(__name__)
 app.secret_key = "my secret key"
 bootstrap = Bootstrap(app)
+user_store = {}
+category_store ={}
+new_user = User("username","password")
 
 @app.route('/')
 def main():
@@ -21,26 +24,25 @@ def signup():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        User.sign_up(username,password)
+        new_user.sign_up(username,password)
+
         flash("Signed up successfully, Please log in")
+
         return redirect(url_for('login'))
     return render_template('signup.html')
-
 
 @app.route("/login", methods =["POST" , "GET"])
 def login():
     if request.method == 'POST':
         username = request.form['username']
-        password = request.form['password']      
-        
-        result = User.log_in(username, password)
-        if result == True:  
-            session["username"] = username  
-            if username == session["username"]: 
-                return redirect(url_for('dashboard'))           
-                flash("Logged in successfully")         
-            flash("Wrong details.Please sign up first or re-enter correct login details") 
-            return redirect(url_for('login'))               
+        password = request.form['password']  
+        session["username"] = username     
+        if username in session["username"]: 
+            new_user.log_in(username,password) 
+            return redirect(url_for('dashboard'))           
+            flash("Logged in successfully") 
+        flash("Wrong details.Please sign up first or re-enter correct login details")
+        return redirect(url_for("login"))        
     return render_template('login.html')
 
 @app.route("/logout", methods =["POST" , "GET"])
@@ -51,26 +53,25 @@ def logout():
 @app.route('/addcategories', methods = ['POST','GET'])
 def addcategories(): 
     if request.method == 'POST': 
-        category_name = request.form['categoryname']    
-        Categories.add_category(category_name)   
-        # Categories.add_category(category_name)     
-        return redirect(url_for('viewcategories'))  
-        flash("Category added successfully")  
-    return render_template('categories.html') 
+        category = user_store[session["username"]].add_category(request.form['categoryname'])
+        if category == True :
+            flash("Category added successfully")    
+            return redirect(url_for('categories'))        
+    return render_template('viewcategories.html', user_store[session["username"]].category_store) 
 
 @app.route('/viewcategories')
 def viewcategories():
-    recipe_category = Categories.view_categories()
+    recipe_category = new_user.view_categories()
     return render_template('viewcategories.html', recipe_category = recipe_category) 
 
 @app.route('/getcategory/<categoryname>')
 def getcategory(categoryname):  
-    recipe_category = Categories.view_categories()      
+    recipe_category = new_user.view_categories()      
     return render_template('addrecipe.html',recipe_category = recipe_category) 
 
 @app.route('/deletecategories/<categoryname>')
 def deletecategories(categoryname):
-    Categories.delete_category(categoryname) 
+    User.delete_category(categoryname) 
     flash ("Category deleted successfully")   
     return redirect(url_for('viewcategories'))
 
@@ -80,7 +81,7 @@ def editcategories(categoryname):
     if request.method == 'POST':     
         new_categoryname = request.form["new_categoryname"]       
         print (categoryname)
-        Categories.edit_category(categoryname,new_categoryname)
+        User.edit_category(categoryname,new_categoryname)
         flash ("Category updated")
         return redirect(url_for('viewcategories'))
     return render_template('editcategories.html', categoryname= categoryname )

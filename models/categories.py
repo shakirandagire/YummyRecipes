@@ -1,29 +1,25 @@
 class Categories:
-    
-    category_store = {}
 
     def __init__(self, categoryname):
         self.categoryname = categoryname
-        self.category_store = {}
+        self.recipe_store = {}
 
-    @classmethod
-    def add_category(self, categoryname):
-        if categoryname not in self.category_store.values() and categoryname != "":
-            self.category_store[categoryname] = categoryname
-            return True
-        return False
+     
+    def add_recipe(self, recipename, description):
+        self.recipe_store[recipename] = description 
+          
+   
+    def delete_recipe(self, recipename,description):
+       if recipename in self.recipe_store:
+            self.recipe_store.pop(recipename,description)
 
-    @classmethod
-    def delete_category(cls, categoryname):
-        if categoryname in cls.category_store:
-            cls.category_store.pop(categoryname)
+    
+    def edit_recipe(self,recipename,new_recipename):
+        if recipename in self.recipe_store:
+            self.recipe_store[new_recipename] = self.recipe_store.pop(recipename)
 
-    @classmethod
-    def edit_category(self,categoryname,new_categoryname):
-        if categoryname in self.category_store:
-            self.category_store[new_categoryname] = self.category_store.pop(categoryname)
-            return True
 
-    @classmethod
-    def view_categories(self):
-        return self.category_store
+    def view_recipes(self):
+        return self.recipe_store
+
+   
