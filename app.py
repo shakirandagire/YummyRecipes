@@ -1,15 +1,13 @@
 from flask import Flask, render_template, request, url_for,redirect,session,flash
 from models.categories import Categories
 from models.user import User
+from models.user import user_store
 from models.recipes import Recipe
 from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
 app.secret_key = "my secret key"
 bootstrap = Bootstrap(app)
-user_store = {}
-category_store ={}
-new_user = User("username","password")
 
 @app.route('/')
 def main():
@@ -24,7 +22,7 @@ def signup():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        new_user.sign_up(username,password)
+        User.sign_up(username,password)
 
         flash("Signed up successfully, Please log in")
 
@@ -38,7 +36,7 @@ def login():
         password = request.form['password']  
         session["username"] = username     
         if username in session["username"]: 
-            new_user.log_in(username,password) 
+            User.log_in(username,password) 
             return redirect(url_for('dashboard'))           
             flash("Logged in successfully") 
         flash("Wrong details.Please sign up first or re-enter correct login details")
@@ -47,7 +45,8 @@ def login():
 
 @app.route("/logout", methods =["POST" , "GET"])
 def logout():
-    session.pop('username', None)
+    session.pop('username')
+    flash('You have logged out')
     return redirect(url_for('main'))
 
 @app.route('/addcategories', methods = ['POST','GET'])
@@ -55,19 +54,15 @@ def addcategories():
     if request.method == 'POST': 
         category = user_store[session["username"]].add_category(request.form['categoryname'])
         if category == True :
-            flash("Category added successfully")    
-            return redirect(url_for('categories'))        
-    return render_template('viewcategories.html', user_store[session["username"]].category_store) 
+            flash("Category added successfully")  
+            print (category)  
+            return redirect(url_for('viewcategories'))        
+    return render_template('categories.html') 
 
 @app.route('/viewcategories')
 def viewcategories():
-    recipe_category = new_user.view_categories()
+    recipe_category = user_store[session["username"]].view_categories()
     return render_template('viewcategories.html', recipe_category = recipe_category) 
-
-@app.route('/getcategory/<categoryname>')
-def getcategory(categoryname):  
-    recipe_category = new_user.view_categories()      
-    return render_template('addrecipe.html',recipe_category = recipe_category) 
 
 @app.route('/deletecategories/<categoryname>')
 def deletecategories(categoryname):
@@ -77,30 +72,33 @@ def deletecategories(categoryname):
 
 @app.route('/editcategories/<categoryname>', methods = ['POST','GET'])
 def editcategories(categoryname):  
-    categoryname = session[categoryname]
-    if request.method == 'POST':     
-        new_categoryname = request.form["new_categoryname"]       
-        print (categoryname)
-        User.edit_category(categoryname,new_categoryname)
-        flash ("Category updated")
-        return redirect(url_for('viewcategories'))
-    return render_template('editcategories.html', categoryname= categoryname )
+    session['new_categoryname'] = categoryname
+    if request.method == 'POST': 
+        result = user_store[session["username"]].edit_category(
+            session['new_categoryname'],request.form['categoryname'])      
+        if result == True:      
+            flash ("Category updated")
+            return redirect(url_for('viewcategories'))
+    return render_template('editcategories.html')
+
 
 @app.route('/addrecipe', methods = ['POST','GET']) 
 def addrecipe():   
+
     if request.method == 'POST':
-        recipe_name = request.form['recipename']
-        recipe_description = request.form['description']
-        Recipe.add_recipe(recipe_name,recipe_description)
-
+        result = user_store[session["username"]].category_store[session['categoryname']].add_recipe(
+            request.form['recipename'], request.form['description'])
+        if result == True:
+            flash("recipe added")
+        else:
+            flash("Not added")
         return redirect(url_for('viewrecipes'))
-
     return render_template('addrecipe.html')
 
 
 @app.route('/viewrecipes', methods = ['POST', 'GET'])
 def viewrecipes():  
-    my_recipe = Recipe.view_recipes()
+    my_recipe = user_store[session["username"]].category_store[session['categoryname']].view_recipes()
     return render_template('viewrecipes.html', my_recipe = my_recipe) 
 
 @app.route('/deleterecipe/<recipename>/<description>')

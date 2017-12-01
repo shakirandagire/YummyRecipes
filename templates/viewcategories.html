@@ -52,14 +52,14 @@
           <td>{{key}}</td>
           <td>
             <button class="btn btn-default">
-              <a href = {{ url_for('deletecategories', categoryname=key) }}>
+              <a href = {{ url_for('deletecategories', categoryname = key) }}>
                 Delete Category
               </a>
             </button>
           </td> 
           <td>
             <button class="btn btn-default">
-              <a href = {{ url_for('editcategories', categoryname = categoryname)}}>
+              <a href = {{ url_for('editcategories', categoryname = key)}}>
                Edit Category
               </a>
             </button>
@@ -67,7 +67,7 @@
 
           <td>
               <button class="btn btn-default">
-                <a href ='/getcategory/{{key}}'>
+                <a href ='/addrecipe/{{key}}'>
                   Add recipe
                 </a>
               </button> 
