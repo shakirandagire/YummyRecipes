@@ -61,12 +61,13 @@ def addcategories():
 
 @app.route('/viewcategories')
 def viewcategories():
-    recipe_category = user_store[session["username"]].view_categories()
-    return render_template('viewcategories.html', recipe_category = recipe_category) 
+    # recipe_category = user_store[session["username"]].view_categories()
+    # return render_template('viewcategories.html', recipe_category = recipe_category)
+    return render_template('viewcategories.html', recipe_category=user_store[session['username']].category_store)
 
 @app.route('/deletecategories/<categoryname>')
 def deletecategories(categoryname):
-    User.delete_category(categoryname) 
+    user_store[session['username']].delete_category(categoryname) 
     flash ("Category deleted successfully")   
     return redirect(url_for('viewcategories'))
 
@@ -78,7 +79,7 @@ def editcategories(categoryname):
             session['new_categoryname'],request.form['categoryname'])      
         if result == True:      
             flash ("Category updated")
-            return redirect(url_for('viewcategories'))
+            return redirect(url_for('viewcategories',))
     return render_template('editcategories.html')
 
 

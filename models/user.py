@@ -1,10 +1,10 @@
 user_store = {}
-category_store = {}    
+    
 class User:
     def __init__(self,username, password):
         self.username = username
         self.password = password 
-           
+        self.category_store = {}
     @classmethod    
     def sign_up(cls,username,password):
         if username and password:
@@ -18,26 +18,25 @@ class User:
                     return True
 
     def add_category(self, categoryname):
-        if categoryname not in category_store and categoryname != "" and categoryname != " ":
-            category_store[categoryname] = categoryname
+        if categoryname not in self.category_store and categoryname != "" and categoryname != " ":
+            self.category_store[categoryname] = categoryname
             return True
         return False
 
     def edit_category(self, categoryname, new_categoryname):
-        if categoryname in category_store:
-            category_store[new_categoryname] =  category_store.pop(categoryname)
+        if categoryname in self.category_store:
+            self.category_store[new_categoryname] =  self.category_store.pop(categoryname)
             return True
         return False
 
-    @classmethod
-    def delete_category(cls, categoryname):
-        if categoryname in category_store:
-            category_store.pop(categoryname)
+    def delete_category(self, categoryname):
+        if categoryname in self.category_store:
+            self.category_store.pop(categoryname)
             return True
         return False
 
     def view_categories(self):
-        return category_store
+        return self.category_store
 
 
     
