@@ -1,6 +1,6 @@
 import unittest
 
-from recipes import Recipe
+from models.recipes import Recipe
 
 class TestRecipes(unittest.TestCase):
     def setUp(self):

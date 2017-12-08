@@ -83,14 +83,13 @@ def editcategories(categoryname):
     return render_template('editcategories.html')
 
 
-@app.route('/addrecipe', methods = ['POST','GET']) 
-def addrecipe():   
+@app.route('/addrecipe/<recipename>', methods = ['POST','GET']) 
+def addrecipe(recipename):    
 
     if request.method == 'POST':
-        result = user_store[session["username"]].category_store[session['categoryname']].add_recipe(
-            request.form['recipename'], request.form['description'])
+        result = user_store[session["username"]].category_store[session['categoryname']].add_recipe(request.form['recipename'], request.form['description'])
         if result == True:
-            flash("recipe added")
+            flash("Recipe Added")
         else:
             flash("Not added")
         return redirect(url_for('viewrecipes'))
