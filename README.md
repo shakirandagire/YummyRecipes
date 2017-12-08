@@ -1,4 +1,4 @@
-YummyRecipes
+YummyRecipes [![Build Status](https://travis-ci.org/shakirandagire/YummyRecipes.svg?branch=master)](https://travis-ci.org/shakirandagire/YummyRecipes)
 
 This is an application that helps users keep track of their favorite recipes.
 
