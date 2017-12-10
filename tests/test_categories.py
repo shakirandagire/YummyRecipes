@@ -1,6 +1,6 @@
 import unittest
 
-from models.categories import Categories
+from app.models.categories import Categories
 
 class TestCategories(unittest.TestCase):
     def setUp(self):

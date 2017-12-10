@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, url_for,redirect,session,flash
-from models.categories import Categories
-from models.user import User
-from models.user import user_store
-from models.recipes import Recipe
+from app.models.categories import Categories
+from app.models.user import User
+from app.models.user import user_store
+from app.models.recipes import Recipe
 from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
