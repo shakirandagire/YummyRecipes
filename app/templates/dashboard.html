@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Yummy Recipe App</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{url_for('static',filename =  'css/bootstrap.min.css')}}">
+    <script src="{{url_for('static', filename ='js/jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename ='js/bootstrap.min.js')}}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  </head>
+
+  
+  <body class = "my_container" background = {{ url_for('static', filename='img/food1.jpg') }}>
+
+      <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">Yummy Recipe App</a>
+            </div>
+            <ul class="nav navbar-nav">
+              <li><a href="{{ url_for('main')}}">Home</a></li>
+              <li><a href="{{ url_for('dashboard')}} ">Recipes</a></li>
+              <li><a href="{{ url_for('addcategories')}} ">Categories</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#"><span class="glyphicon glyphicon-user"></span> Hallo, {{session["username"]}}</a></li>
+              <li><a href="{{ url_for('logout')}} ">Logout</a></li>
+            </ul>
+        </nav>
+      
+      <div class = "container">
+      
+        <h3> Welcome to Yummy Recipes by Shakira</h3>
+
+        <h3> Add Recipe Categories for your favourite foods</h3>
+
+        <button class="btn btn-default" align = "centre" style="height:50px; width:150px" >
+          <a href = {{ url_for('addcategories') }}>
+           Create Category
+          </a>
+        </button>
+               
+      </div>     
+ 
+  </body>
+</html>

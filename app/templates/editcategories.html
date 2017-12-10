@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Yummy Recipe App</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{url_for('static',filename =  'css/bootstrap.min.css')}}">
+    <script src="{{url_for('static', filename ='js/jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename ='js/bootstrap.min.js')}}"></script>
+  </head>
+
+  
+  <body>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+                <div class="navbar-header">
+                  <a class="navbar-brand" href="#">Yummy Recipe App</a>
+                </div>
+                <ul class="nav navbar-nav">
+                  <li><a href="{{ url_for('main')}}">Home</a></li>
+                  <li><a href="{{ url_for('dashboard')}} ">Recipes</a></li>
+                </ul>
+        </div>
+    </nav>
+
+    <div class="container">       
+
+        <p>Recipe Categories:</p> 
+
+        {%block form%}
+
+        <form method = "POST" action="">
+
+          <div class="form-group">
+
+              <label>Category Name:</label>
+              
+              <input type="text" name = "categoryname" class="form-control" value="{{ session['new_categoryname'] }}">
+              
+            
+          </div>
+      
+          <button type="submit" class="btn btn-default">Update Category</button>
+        </form>   
+
+        {%endblock%}
+    </div>
+  </body>
+</html>
